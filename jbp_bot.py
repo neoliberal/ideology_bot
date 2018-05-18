@@ -66,7 +66,7 @@ class JbpBot(object):
             try:
                 comment.reply(self._jbp_generate())
             except:
-                self.logger.error("Reply failed to comment: %s", str(comment)))
+                self.logger.error("Reply failed to comment: %s", str(comment))
 
     def _jbp_generate(self) -> str:
         villian:    str = random.choice(self.villians)
