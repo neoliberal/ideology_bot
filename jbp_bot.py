@@ -41,6 +41,8 @@ class JbpBot(object):
         os._exit(os.EX_OK)
         return
 
+
+
     def listen(self) -> None:
         """lists to subreddit's comments for JBP requests"""
         import prawcore
@@ -50,7 +52,6 @@ class JbpBot(object):
                 if comment is None:
                     break
                 if str(comment) in self.parsed:
-                    self.logger.debug(f"Comment {str(comment)} found in parsed, skip")
                     continue
                 else:
                     self.handle_comment(comment)
@@ -82,29 +83,17 @@ class JbpBot(object):
         favorite:   str = random.choice(self.favorites)
         weapon:     str = random.choice(self.weapons)
         conclusion: str = random.choice(self.conclusions)
-        response:   str = f"The wise man bowed his head solemnly and spoke: \"{villian} {verb} {favorite} because of their {weapon} {conclusion}\""
+        response:   str = f"The wise man bowed his head solemnly and spoke: \"{villian} {verb} {favorite} because of their {weapon}{conclusion}\""
         return response
-    def load(self) -> Deque[str]:
-        """loads pickle if it exists"""
-        self.logger.debug("Loading pickle file")
-        try:
-            with open("jbp_parsed.pkl", 'rb') as parsed_file:
-                try:
-                    parsed: Deque[str] = pickle.loads(parsed_file.read())
-                    self.logger.debug("Loaded pickle file")
-                    self.logger.debug("Current Size: %s", len(parsed))
-                    if parsed.maxlen != 10000:
-                        self.logger.warning(
-                            "Deque length is not 10000, returning new one")
-                        return Deque(parsed, maxlen=10000)
-                    self.logger.debug("Maximum Size: %s", parsed.maxlen)
-                    return parsed
-                except EOFError:
-                    self.logger.debug("Empty file, returning empty deque")
-                    return Deque(maxlen=10000)
-        except FileNotFoundError:
-            self.logger.debug("No file found, returning empty deque")
-            return Deque(maxlen=10000)
+
+    def save(self) -> None:
+        """pickles tracked comments after shutdown"""
+        self.logger.debug("Saving file")
+        with open("jbp_parsed.pkl", 'wb') as parsed_file:
+            parsed_file.write(pickle.dumps(self.parsed))
+            self.logger.debug("Saved file")
+            return
+        return
 
     def load(self) -> Deque[str]:
         """loads pickle if it exists"""
@@ -183,11 +172,11 @@ class JbpBot(object):
             "low serotonin levels and poor posture",
             "totalitarian ideology which I've been studying for decades"]
         self.conclusions: List[str] = [
-            "and we can't even have a conversation about it!",
-            "so just ask the Kulaks how that worked out.",
-            "and no one is talking about it!",
-            "as you can bloody well imagine!",
-            "just like Nietzche prophesized.",
-            "so you should sign up for the Self Authoring Suite.",
+            ", and we can't even have a conversation about it!",
+            ", so just ask the Kulaks how that worked out.",
+            ", and no one is talking about it!",
+            ", as you can bloody well imagine!",
+            ", just like Nietzche prophesized.",
+            ", so you should sign up for the Self Authoring Suite.",
             ". [ignoring the original question] So let me ask you this...",
-            "and you can be damn sure about that!"]
+            ", and you can be damn sure about that!"]
