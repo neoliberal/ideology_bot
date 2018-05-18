@@ -1,0 +1,14 @@
+[Unit]
+Description=jbp_bot
+After=multi-user.target
+
+[Service]
+Type=simple
+EnvironmentFile=/var/lib/jbp_bot/data/variables.env
+ExecStart=/usr/bin/python3.6 /var/lib/jbp_bot/service.py
+User=root
+WorkingDirectory=/var/lib/jbp_bot
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
