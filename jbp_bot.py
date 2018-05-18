@@ -10,7 +10,8 @@ from slack_python_logging import slack_logger
 
 class JbpBot(object):
     """Replies to users with a Petersonian response"""
-    __slots__ = ["reddit", "subreddit", "config", "logger"]
+    __slots__ = ["reddit", "subreddit", "config", "logger",
+                 "villians", "verbs", "favorites", "weapons", "conclusions"]
 
     def __init__(self, reddit: praw.Reddit, subreddit: str) -> None:
         """initialize"""
@@ -46,6 +47,7 @@ class JbpBot(object):
                 if comment is None:
                     break
                 self.handle_comment(comment)
+            return
         except prawcore.exceptions.ServerError:
             self.logger.error("Server error: Sleeping for 1 minute.")
             sleep(60)
@@ -59,7 +61,6 @@ class JbpBot(object):
     def handle_comment(self, comment: praw.models.Comment) -> None:
         """handles parsing and reply"""
         split: List[str] = comment.body.upper().split()
-        self.parsed.append(str(comment))
 
         if "!JBP" in split:
             self.logger.debug("JBP request found in %s", str(comment))
@@ -91,8 +92,7 @@ class JbpBot(object):
             "Politically correct HR departments",
             "*Actual* Communists",
             "The *Left*",
-            "Millenials with a victimhood mentality"
-        ]
+            "Millenials with a victimhood mentality"]
         self.verbs: List[str] = [
             "are totally corrupting",
             "have zero respect for",
@@ -104,8 +104,7 @@ class JbpBot(object):
             "dismiss and transgress",
             "must be stopped from attacking",
             "will make Gulags out of",
-            "feminize and weaken"
-        ]
+            "feminize and weaken"]
         self.favorites: List[str] = [
             "the dominance hierarchy",
             "the metaphorical substrate",
@@ -119,8 +118,7 @@ class JbpBot(object):
             "IQ testing's ability to determine achievement",
             "the divine Logos",
             "the inescapable tragedy and suffering of life",
-            "the humble lobster's quest"
-        ]
+            "the humble lobster's quest"]
         self.weapons: List[str] = [
             "murderous equity doctrine",
             "dangerous egalitarian utopia",
@@ -134,8 +132,7 @@ class JbpBot(object):
             "disdain for Being",
             "ideological bill C-16",
             "low serotonin levels and poor posture",
-            "totalitarian ideology which I've been studying for decades"
-        ]
+            "totalitarian ideology which I've been studying for decades"]
         self.conclusions: List[str] = [
             "and we can't even have a conversation about it!",
             "so just ask the Kulaks how that worked out.",
@@ -144,5 +141,4 @@ class JbpBot(object):
             "just like Nietzche prophesized.",
             "so you should sign up for the Self Authoring Suite.",
             ". [ignoring the original question] So let me ask you this...",
-            "and you can be damn sure about that!"
-        ]
+            "and you can be damn sure about that!"]
