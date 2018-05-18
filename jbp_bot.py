@@ -1,5 +1,4 @@
 """main class"""
-from configparser import ConfigParser, ParsingError, NoSectionError
 import logging
 import signal
 import random
@@ -70,11 +69,11 @@ class JbpBot(object):
                 self.logger.error("Reply failed to comment: %s", str(comment)))
 
     def _jbp_generate(self) -> str:
-        villian:    str = villians[random.randrange(0, len(villians))]
-        verb:       str = verbs[random.randrange(0, len(verbs))]
-        favorite:   str = favorites[random.randrange(0, len(favorites))]
-        weapon:     str = weapons[random.randrange(0, len(weapons))]
-        conclusion: str = conclusions[random.randrange(0, len(conclusions))]
+        villian:    str = random.choice(self.villians)
+        verb:       str = random.choice(self.verbs)
+        favorite:   str = random.choice(self.favorites)
+        weapon:     str = random.choice(self.weapons)
+        conclusion: str = random.choice(self.conclusions)
         response:   str = f"The wise man bowed his head solemnly and spoke: \"{villian} {verb} {favorite} because of their {weapon} {conclusion}\""
         return response
 
