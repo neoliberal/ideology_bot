@@ -4,9 +4,10 @@ import os
 import praw
 
 try:
-    from jbp_bot import JbpBot
+    from ideology_Bot import IdeologyBot
 except ModuleNotFoundError:
-    from .jbp_bot import JbpBot
+    from .ideology_Bot import IdeologyBot
+
 
 def main() -> None:
     """main service function"""
@@ -18,9 +19,8 @@ def main() -> None:
         user_agent="linux:jbp_bot:v1.0 (by /r/Neoliberal)"
     )
 
-    bot: JbpBot = JbpBot(
-        reddit,
-        os.environ["jbp_subreddit"]
+    bot: IdeologyBot = IdeologyBot(
+        reddit
     )
 
     while True:
