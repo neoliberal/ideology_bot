@@ -59,6 +59,7 @@ class IdeologyBot(object):
             for mention in praw.models.util.stream_generator(
                     self.reddit.inbox.unread):
                 self.handle_mention(mention)
+                mention.mark_read()
         except prawcore.exceptions.ServerError:
             self.logger.error("Server error: Sleeping for 1 minute.")
             sleep(60)
