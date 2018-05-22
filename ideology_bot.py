@@ -39,7 +39,7 @@ class IdeologyBot(object):
         for file in Path('data').glob('*.json'):
             with file.open('r') as ideology:
                 parsed: Dict[str, Dict[str, Any]] = json.loads(ideology.read())
-                trigger, data = parsed.items()
+                trigger, data = list(parsed.items())[0]
                 ideologies[trigger] = Ideology(*data.values())
         return ideologies
 
