@@ -4,9 +4,9 @@ import os
 import praw
 
 try:
-    from ideology_Bot import IdeologyBot
+    from ideology_bot import IdeologyBot
 except ModuleNotFoundError:
-    from .ideology_Bot import IdeologyBot
+    from .ideology_bot import IdeologyBot
 
 
 def main() -> None:
