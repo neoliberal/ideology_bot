@@ -1,13 +1,13 @@
 [Unit]
-Description=jbp_bot
+Description=ideology_bot
 After=multi-user.target
 
 [Service]
 Type=simple
 EnvironmentFile=/var/lib/jbp_bot/data/variables.env
-ExecStart=/usr/bin/python3.6 /var/lib/jbp_bot/service.py
+ExecStart=/usr/bin/python3.6 /var/lib/ideology_bot/service.py
 User=root
-WorkingDirectory=/var/lib/jbp_bot
+WorkingDirectory=/var/lib/ideology_bot
 Restart=no
 
 [Install]
